@@ -3,7 +3,7 @@ const randomToken = require('../helpers/randomToken');
 const {
     isValidEmail,
     isValidPassword,
-  } = require('../middlewares/validations');
+  } = require('../middlewares/validationLogin');
 
 router.post('/', isValidEmail, isValidPassword, (req, res) => {
     res.status(200).json({

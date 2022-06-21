@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { readContentFile } = require('../helpers/readFile');
+const validationToken = require('../middlewares/validationToken');
 
 const path = './talker.json';
 
@@ -19,6 +20,17 @@ router.get('/:id', async (req, res, next) => {
           }));
     }
     return res.status(200).json(talker);
+});
+
+router.post('/', validationToken, (req, res) => {
+    res.status(200).json({
+        name: 'Danielle Santos',
+        age: 56,
+        talk: {
+          watchedAt: '22/10/2019',
+          rate: 5,
+        },
+      });
 });
 
 module.exports = router;
