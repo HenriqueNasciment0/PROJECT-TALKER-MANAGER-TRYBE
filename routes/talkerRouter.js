@@ -1,6 +1,12 @@
 const router = require('express').Router();
 const { readContentFile } = require('../helpers/readFile');
-const validationToken = require('../middlewares/validationToken');
+const { writeContentFile } = require('../helpers/writeFile');
+const { isNameValid,
+    isAgeValid,
+    isTalkValid,
+    isRateValid,
+    isWatchedAtValid,
+    isValidToken } = require('../middlewares/validationTalker');
 
 const path = './talker.json';
 
@@ -22,15 +28,17 @@ router.get('/:id', async (req, res, next) => {
     return res.status(200).json(talker);
 });
 
-router.post('/', validationToken, (req, res) => {
-    res.status(200).json({
-        name: 'Danielle Santos',
-        age: 56,
-        talk: {
-          watchedAt: '22/10/2019',
-          rate: 5,
-        },
-      });
-});
+router.post('/',
+    isValidToken,
+    isNameValid,
+    isAgeValid,
+    isTalkValid,
+    isWatchedAtValid,
+    isRateValid,
+     async (req, res) => {
+        const newTalker = req.body;
+        const talkers = await writeContentFile(path, newTalker);
+        return res.status(201).send(talkers);
+    });
 
 module.exports = router;

@@ -7,7 +7,7 @@ const {
 
 router.post('/', isValidEmail, isValidPassword, (req, res) => {
     res.status(200).json({
-        token: randomToken(15),
+        token: randomToken(16),
     });
 });
 
