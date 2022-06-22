@@ -16,6 +16,18 @@ router.get('/', async (req, res) => {
     res.status(200).json(talkers);
 });
 
+router.get('/search', isValidToken, async (req, res) => {
+    const talkers = await readContentFile(path);
+    const { q } = req.query; // no Postman aparece como chave, o valor é o que for buscado.
+    const talker = talkers.filter((e) => e.name.includes(q)); // vê se no nome, inclui o termo buscado que está na chava "q"
+
+    if (!q) {
+        return res.status(200).json(talkers);
+    }
+
+    return res.status(200).json(talker);
+});
+
 router.get('/:id', async (req, res, next) => {
     const talkers = await readContentFile(path) || [];
     const { id } = req.params;
