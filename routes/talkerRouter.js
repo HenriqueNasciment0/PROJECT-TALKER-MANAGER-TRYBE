@@ -60,4 +60,14 @@ router.put('/:id',
         return res.status(200).json({ name, age, id, talk });
     });
 
+router.delete('/:id', isValidToken, async (req, res) => {
+    const id = Number(req.params.id);
+    const talkers = await readContentFile(path); // lendo o arquivo
+
+    const deleteTalkerById = talkers.filter((e) => e.id !== Number(id)); // isolando do arquivo, o elemento do id citado
+    await fs.writeFile(path, JSON.stringify(deleteTalkerById)); // escreve no arquivo, agora sem o id citado.
+
+    return res.status(204).end();
+});
+
 module.exports = router;
