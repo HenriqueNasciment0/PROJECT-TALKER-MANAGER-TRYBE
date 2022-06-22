@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const fs = require('fs').promises;
 const { readContentFile } = require('../helpers/readFile');
 const { writeContentFile } = require('../helpers/writeFile');
 const { isNameValid,
@@ -38,7 +39,25 @@ router.post('/',
      async (req, res) => {
         const newTalker = req.body;
         const talkers = await writeContentFile(path, newTalker);
-        return res.status(201).send(talkers);
+        return res.status(201).json(talkers);
+    });
+
+router.put('/:id',
+    isValidToken,
+    isNameValid,
+    isAgeValid,
+    isTalkValid,
+    isWatchedAtValid,
+    isRateValid, async (req, res) => {
+        const { name, age, talk } = req.body;
+        const id = Number(req.params.id); // só descontruíndo, o número do id vinha como string, por isso fiz dessa maneira
+
+        const talkers = await readContentFile(path);
+        const talkerForID = talkers.filter((e) => e.id !== Number(id));
+        talkerForID.push({ name, age, id, talk });
+        await fs.writeFile(path, JSON.stringify(talkerForID));
+        
+        return res.status(200).json({ name, age, id, talk });
     });
 
 module.exports = router;
