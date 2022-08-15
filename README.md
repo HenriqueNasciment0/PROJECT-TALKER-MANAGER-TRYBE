@@ -10,6 +10,14 @@ Desenvolver alguns endpoints que irão ler e escrever em um arquivo utilizando o
 <img src="./images/talker-manager.png"/>
 </details>
 
+## 🚀 Tecnologias
+
+* _Bash_
+* _Docker_
+* _MySQL_
+* _Workbench_
+* _Postmann_
+
 Instale as dependências:
 ```
 npm install
