@@ -1,4 +1,4 @@
-# Projet Talker Manager
+# Project Talker Manager
 
 A tarefa era construir uma aplicação de cadastro de talkers (palestrantes) em que seria possível cadastrar, visualizar, pesquisar, editar e excluir informações. Para isso foi necessário:
 
